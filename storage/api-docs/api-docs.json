@@ -1,0 +1,177 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "Reservasi Booking Service API",
+        "description": "API untuk Service Reservasi & Booking",
+        "version": "1.0.0"
+    },
+    "servers": [
+        {
+            "url": "http://localhost:8000",
+            "description": "Local Server"
+        }
+    ],
+    "paths": {
+        "/api/v1/reservasis": {
+            "get": {
+                "tags": [
+                    "Reservasis"
+                ],
+                "summary": "Get all reservasis",
+                "operationId": "8876f0d4c06ec17af6afc0a1f8f7b007",
+                "responses": {
+                    "200": {
+                        "description": "Reservasis retrieved successfully"
+                    },
+                    "401": {
+                        "description": "Invalid API Key"
+                    }
+                },
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/v1/reservasis/{id}": {
+            "get": {
+                "tags": [
+                    "Reservasis"
+                ],
+                "summary": "Get reservasi by ID",
+                "operationId": "e59422bc5578bdfd1684df1dc63d47ee",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Reservasi found"
+                    },
+                    "401": {
+                        "description": "Invalid API Key"
+                    },
+                    "404": {
+                        "description": "Reservasi not found"
+                    }
+                },
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/v1/reservasis/{id}/checkin": {
+            "post": {
+                "tags": [
+                    "Reservasis"
+                ],
+                "summary": "Check In Reservasi",
+                "operationId": "00ea1e8115eff602d3ae127eb6113b62",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Check-in success"
+                    },
+                    "401": {
+                        "description": "Invalid API Key"
+                    },
+                    "404": {
+                        "description": "Reservasi not found"
+                    }
+                },
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/v1/reservasis/{id}/status": {
+            "put": {
+                "tags": [
+                    "Reservasis"
+                ],
+                "summary": "Update reservasi status",
+                "operationId": "82dd0d4903f1f336cf3b330b9dcd53fc",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "status": {
+                                        "type": "string",
+                                        "example": "confirmed"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Status updated"
+                    },
+                    "401": {
+                        "description": "Invalid API Key"
+                    },
+                    "404": {
+                        "description": "Reservasi not found"
+                    },
+                    "422": {
+                        "description": "Validation error"
+                    }
+                },
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ]
+            }
+        }
+    },
+    "components": {
+        "securitySchemes": {
+            "ApiKeyAuth": {
+                "type": "apiKey",
+                "name": "X-IAE-KEY",
+                "in": "header"
+            }
+        }
+    },
+    "tags": [
+        {
+            "name": "Reservasis",
+            "description": "Reservasi API"
+        }
+    ]
+}

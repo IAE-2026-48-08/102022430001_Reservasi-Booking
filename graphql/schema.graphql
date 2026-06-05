@@ -1,0 +1,11 @@
+type Reservasi {
+    id: ID!
+    booking_code: String!
+    guest_name: String!
+    room_type: String!
+    status: String!
+}
+
+type Query {
+    reservasis: [Reservasi!]! @all
+}
