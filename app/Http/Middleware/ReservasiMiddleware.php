@@ -11,8 +11,8 @@ class ReservasiMiddleware
     public function handle(Request $request, Closure $next): Response
     {
         $apiKey = $request->header('X-IAE-KEY');
-
-        if ($apiKey !== '102022430001')
+        $expectedKey = env('IAE_API_KEY', 'KEY-MHS-37');
+        if ($apiKey !== $expectedKey)
         {
             return response()->json([
                 'status' => 'error',
