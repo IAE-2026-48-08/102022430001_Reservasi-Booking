@@ -30,7 +30,9 @@ http://localhost:8000/api/v1/reservasis/{id}/checkin
 Contoh:
 
 http://localhost:8000/api/v1/reservasis/1/checkin
+
 http://localhost:8000/api/v1/reservasis/2/checkin
+
 http://localhost:8000/api/v1/reservasis/3/checkin
 
 
@@ -179,7 +181,7 @@ Integrasi meliputi:
 
 Transaksi Check-In dipilih karena merupakan transaksi penting yang mengubah status reservasi dan memerlukan pencatatan audit serta distribusi informasi ke sistem lain.
 
-Hasil pengujian menunjukkan bahwa:
+Hasil yang didapatkan:
 
 - M2M Token berhasil diperoleh.
 - User Token berhasil diperoleh.
