@@ -37,5 +37,6 @@ return [
     'iae_sso' => [
     'url' => env('IAE_SSO_BASE_URL', 'https://iae-sso.virtualfri.id'),
     'api_key' => env('IAE_API_KEY'),
+    'nim' => env('MHS_NIM'),
     ],
 ];

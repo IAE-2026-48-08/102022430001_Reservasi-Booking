@@ -18,5 +18,7 @@ Route::prefix('v1')->middleware('reservasi.key')->group(function () {
         [ReservasiController::class,'updateStatus']);
     Route::get('/sso/login', 
         [SsoTestController::class,'login']);
+    Route::get('/sso/m2m',
+        [SsoTestController::class, 'm2m']);
 });
 

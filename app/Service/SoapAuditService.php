@@ -34,11 +34,11 @@ class SoapAuditService
 
     private function parseXmlResponse(string $xmlContent): string
     {
-        if (preg_match('/<iae:Receipt\s*Number>(.*?)<\/iae:Receipt\s*Number>/i', $xmlContent, $matches)) {
+        if (preg_match('/<iae:ReceiptNumber>(.*?)<\/iae:ReceiptNumber>/is', $xmlContent, $matches)) {
             return trim($matches[1]);
         }
 
-        if (preg_match('/<ReceiptNumber>(.*?)<\/ReceiptNumber>/i', $xmlContent, $matches)) {
+        if (preg_match('/<ReceiptNumber>(.*?)<\/ReceiptNumber>/is', $xmlContent, $matches)) {
             return trim($matches[1]);
         }
 

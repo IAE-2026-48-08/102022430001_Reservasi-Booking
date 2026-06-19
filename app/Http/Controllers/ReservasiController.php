@@ -3,12 +3,13 @@
 namespace App\Http\Controllers;
 
 use App\Models\Reservasi;
+use App\Models\UserRole;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 use OpenApi\Attributes as OA;
 use App\Service\SsoService;
 use App\Service\SoapAuditService;
 use App\Service\RabbitMqService;
-use Illuminate\Support\Facades\Log;
 
 #[OA\Tag(
     name: "Reservasis",
@@ -136,7 +137,7 @@ class ReservasiController extends Controller
         $reservasi->save();
 
         $receiptNumber = "IAE-LOG-LOCAL-" . strtoupper(uniqid());
-        $wargaData = ['sso_subject' => 'warga14@ktp.iae.id', 'roles' => ['warga']];
+        $wargaData = ['sso_subject' => env('IAE_WARGA_EMAIL'), 'roles' => ['warga']];
 
         try {
             $ssoService = new SsoService();
@@ -144,13 +145,22 @@ class ReservasiController extends Controller
             $m2mResponse = $ssoService->getM2mToken();
             $m2mToken = $m2mResponse['token'] ?? null;
 
-            $wargaResponse = $ssoService->loginWarga('warga14@ktp.iae.id');
+            $wargaResponse = $ssoService->loginWarga(env('IAE_WARGA_EMAIL'));
             if (isset($wargaResponse['token'])) {
                 $decoded = $ssoService->decodePayload($wargaResponse['token']);
                 if ($decoded) {
+                    UserRole::updateOrCreate(
+                        [
+                        'email' => $decoded['profile']['email']
+                        ],
+
+                        [
+                        'role' => 'warga'
+                        ]
+                    );
                     $wargaData = [
-                        'sso_subject' => $decoded['email'] ?? 'warga14@ktp.iae.id',
-                        'roles' => $decoded['roles'] ?? ['warga']
+                        'sso_subject' => $decoded['profile']['email'],
+                        'roles' =>['warga']
                     ];
                 }
             }
@@ -175,8 +185,14 @@ class ReservasiController extends Controller
                     'service_name' => 'Reservasi-Service',
                     'api_version' => 'v1',
                     'occurred_at' => now()->toIso8601String(),
+
                     'reservasi_id' => $reservasi->id,
+                    'booking_code' => $reservasi->booking_code,
+                    'guest_name' => $reservasi->guest_name,
+                    'room_type' => $reservasi->room_type,
+
                     'legacy_receipt_number' => $receiptNumber,
+                    'nim' => env('MHS_NIM'),
                     'approved_by' => $wargaData
                 ];
 
@@ -192,7 +208,9 @@ class ReservasiController extends Controller
             'message' => 'Check-in successful, audited, and broadcasted to RabbitMQ!',
             'data' => [
                 'reservasi' => $reservasi,
-                'iae_audit_receipt' => $receiptNumber
+                'iae_audit_receipt' => $receiptNumber,
+                'nim' => env('MHS_NIM'),
+                'approved_by' => $wargaData
             ],
             'meta' => [
                 'service_name' => 'Reservasi-Service',
