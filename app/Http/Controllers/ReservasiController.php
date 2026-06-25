@@ -12,26 +12,21 @@ use App\Service\SoapAuditService;
 use App\Service\RabbitMqService;
 
 #[OA\Tag(
-    name: "Reservasis",
+    name: "Reservations",
     description: "Reservasi API"
 )]
-#[OA\SecurityScheme(
-    securityScheme: "ApiKeyAuth",
-    type: "apiKey",
-    in: "header",
-    name: "X-IAE-KEY"
-)]
+
 class ReservasiController extends Controller
 {
     #[OA\Get(
-        path: "/api/v1/reservasis",
-        summary: "Get all reservasis",
+        path: "/api/v1/reservations",
+        summary: "Get all reservations",
         security: [["ApiKeyAuth" => []]],
-        tags: ["Reservasis"]
+        tags: ["Reservations"]
     )]
     #[OA\Response(
         response: 200,
-        description: "Reservasis retrieved successfully"
+        description: "Reservations retrieved successfully"
     )]
     #[OA\Response(
         response: 401,
@@ -41,7 +36,7 @@ class ReservasiController extends Controller
     {
         return response()->json([
             'status' => 'success',
-            'message' => 'Reservasis retrieved successfully',
+            'message' => 'Reservations retrieved successfully',
             'data' => Reservasi::all(),
             'meta' => [
                 'service_name' => 'Reservasi-Service',
@@ -51,10 +46,10 @@ class ReservasiController extends Controller
     }
 
     #[OA\Get(
-        path: "/api/v1/reservasis/{id}",
+        path: "/api/v1/reservations/{id}",
         summary: "Get reservasi by ID",
         security: [["ApiKeyAuth" => []]],
-        tags: ["Reservasis"]
+        tags: ["Reservations"]
     )]
     #[OA\Parameter(
         name: "id",
@@ -98,10 +93,10 @@ class ReservasiController extends Controller
     }
 
     #[OA\Post(
-        path: "/api/v1/reservasis/{id}/checkin",
+        path: "/api/v1/reservations/{id}/checkin",
         summary: "Check In Reservasi",
         security: [["ApiKeyAuth" => []]],
-        tags: ["Reservasis"]
+        tags: ["Reservations"]
     )]
     #[OA\Parameter(
         name: "id",
@@ -220,10 +215,10 @@ class ReservasiController extends Controller
     }
 
     #[OA\Put(
-        path: "/api/v1/reservasis/{id}/status",
+        path: "/api/v1/reservations/{id}/status",
         summary: "Update reservasi status",
         security: [["ApiKeyAuth" => []]],
-        tags: ["Reservasis"]
+        tags: ["Reservations"]
     )]
     #[OA\Parameter(
         name: "id",

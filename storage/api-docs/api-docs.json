@@ -7,21 +7,21 @@
     },
     "servers": [
         {
-            "url": "http://localhost:8000",
+            "url": "http://127.0.0.1:8000",
             "description": "Local Server"
         }
     ],
     "paths": {
-        "/api/v1/reservasis": {
+        "/api/v1/reservations": {
             "get": {
                 "tags": [
-                    "Reservasis"
+                    "Reservations"
                 ],
-                "summary": "Get all reservasis",
-                "operationId": "8876f0d4c06ec17af6afc0a1f8f7b007",
+                "summary": "Get all reservations",
+                "operationId": "019b99eb90234f732ab2477474963cdb",
                 "responses": {
                     "200": {
-                        "description": "Reservasis retrieved successfully"
+                        "description": "Reservations retrieved successfully"
                     },
                     "401": {
                         "description": "Invalid API Key"
@@ -34,13 +34,13 @@
                 ]
             }
         },
-        "/api/v1/reservasis/{id}": {
+        "/api/v1/reservations/{id}": {
             "get": {
                 "tags": [
-                    "Reservasis"
+                    "Reservations"
                 ],
                 "summary": "Get reservasi by ID",
-                "operationId": "e59422bc5578bdfd1684df1dc63d47ee",
+                "operationId": "cc6de5b1aa54a04970d4a3d58989b1e5",
                 "parameters": [
                     {
                         "name": "id",
@@ -69,13 +69,13 @@
                 ]
             }
         },
-        "/api/v1/reservasis/{id}/checkin": {
+        "/api/v1/reservations/{id}/checkin": {
             "post": {
                 "tags": [
-                    "Reservasis"
+                    "Reservations"
                 ],
                 "summary": "Check In Reservasi",
-                "operationId": "00ea1e8115eff602d3ae127eb6113b62",
+                "operationId": "586caab5ecbea1e4ff6d57dd39640dbd",
                 "parameters": [
                     {
                         "name": "id",
@@ -104,13 +104,13 @@
                 ]
             }
         },
-        "/api/v1/reservasis/{id}/status": {
+        "/api/v1/reservations/{id}/status": {
             "put": {
                 "tags": [
-                    "Reservasis"
+                    "Reservations"
                 ],
                 "summary": "Update reservasi status",
-                "operationId": "82dd0d4903f1f336cf3b330b9dcd53fc",
+                "operationId": "be6e8d573e5bac70070f40dd5f87a829",
                 "parameters": [
                     {
                         "name": "id",
@@ -170,7 +170,7 @@
     },
     "tags": [
         {
-            "name": "Reservasis",
+            "name": "Reservations",
             "description": "Reservasi API"
         }
     ]

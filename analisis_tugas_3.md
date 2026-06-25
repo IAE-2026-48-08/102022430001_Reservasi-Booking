@@ -25,15 +25,15 @@ Transaksi yang digunakan:
 
 Endpoint:
 
-http://localhost:8000/api/v1/reservasis/{id}/checkin
+http://localhost:8000/api/v1/reservations/{id}/checkin
 
 Contoh:
 
-http://localhost:8000/api/v1/reservasis/1/checkin
+http://localhost:8000/api/v1/reservations/1/checkin
 
-http://localhost:8000/api/v1/reservasis/2/checkin
+http://localhost:8000/api/v1/reservations/2/checkin
 
-http://localhost:8000/api/v1/reservasis/3/checkin
+http://localhost:8000/api/v1/reservations/3/checkin
 
 
 ## Alasan Transaksi Dinilai Penting

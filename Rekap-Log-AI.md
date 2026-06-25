@@ -4,7 +4,7 @@
 
 2.	Menunjukkan controller ReservasiController yang telah dibuat dan meminta pengecekan apakah masih ada yang perlu disesuaikan
 
-3.	Mengalami error Postman Invalid URI http:///api/v1/reservasis
+3.	Mengalami error Postman Invalid URI http:///api/v1/reservations
 
 4.	Endpoint resource, check-in, dan update status mengembalikan pesan "Reservasi not found"
 
@@ -164,13 +164,13 @@ Solusi:
 
 Dokumentasi endpoint:
 
-    GET  /api/v1/reservasis
+    GET  /api/v1/reservations
     
-    GET  /api/v1/reservasis/{id}
+    GET  /api/v1/reservations/{id}
     
-    POST /api/v1/reservasis/{id}/checkin
+    POST /api/v1/reservations/{id}/checkin
     
-    PUT  /api/v1/reservasis/{id}/status
+    PUT  /api/v1/reservations/{id}/status
 
 Menggunakan:
 

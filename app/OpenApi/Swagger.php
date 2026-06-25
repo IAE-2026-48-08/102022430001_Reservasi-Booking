@@ -10,8 +10,14 @@ use OpenApi\Attributes as OA;
     description: "API untuk Service Reservasi & Booking"
 )]
 #[OA\Server(
-    url: "http://localhost:8000",
+    url: "http://127.0.0.1:8000",
     description: "Local Server"
+)]
+#[OA\SecurityScheme(
+    securityScheme: "ApiKeyAuth",
+    type: "apiKey",
+    in: "header",
+    name: "X-IAE-KEY"
 )]
 class Swagger
 {

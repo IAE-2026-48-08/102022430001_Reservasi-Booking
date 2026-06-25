@@ -7,5 +7,5 @@ type Reservasi {
 }
 
 type Query {
-    reservasis: [Reservasi!]! @all
+    reservations: [Reservasi!]! @all
 }
