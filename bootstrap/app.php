@@ -1,6 +1,6 @@
-    <?php
+<?php
 
-    use Illuminate\Foundation\Application;
+use Illuminate\Foundation\Application;
     use Illuminate\Foundation\Configuration\Exceptions;
     use Illuminate\Foundation\Configuration\Middleware;
     use App\Http\Middleware\ReservasiMiddleware;
@@ -14,7 +14,7 @@
         )
         ->withMiddleware(function (Middleware $middleware){
         $middleware->alias([
-            'reservasi.key' => ReservasiMiddleware::class,
+            'reservasi.key' => \App\Http\Middleware\ReservasiMiddleware::class,
         ]);
         })
         ->withExceptions(function (Exceptions $exceptions) {

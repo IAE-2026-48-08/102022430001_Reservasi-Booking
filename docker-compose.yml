@@ -3,40 +3,7 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-
+    restart: unless-stopped
     ports:
       - "8000:80"
-
-    env_file:
-      - .env
-    depends_on:
-      - mysql
-
-    networks:
-      - reservasi-network
-
-  mysql:
-    image: mysql:8.0
-
-    restart: always
-
-    environment:
-      MYSQL_DATABASE: reservasi_db
-      MYSQL_ROOT_PASSWORD: root
-      MYSQL_USER: reservasi_user
-      MYSQL_PASSWORD: reservasi_pass
-
-    ports:
-      - "3307:3306"
-
-    volumes:
-      - mysql_data:/var/lib/mysql
-
-    networks:
-      - reservasi-network
-
-networks:
-  reservasi-network:
-
-volumes:
-  mysql_data:
+      

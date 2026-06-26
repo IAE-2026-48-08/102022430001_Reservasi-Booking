@@ -1,14 +1,9 @@
 FROM php:8.3-apache
 
 RUN apt-get update && apt-get install -y \
-    zip \
-    unzip \
-    git \
-    curl \
-    libzip-dev \
-    libxml2-dev \
-    libcurl4-openssl-dev \
-    && docker-php-ext-install pdo pdo_mysql zip xml curl sockets bcmath
+    zip unzip git curl libzip-dev libxml2-dev \
+    libcurl4-openssl-dev libsqlite3-dev \
+    && docker-php-ext-install pdo pdo_sqlite zip xml curl sockets bcmath
 
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 
@@ -19,11 +14,15 @@ WORKDIR /var/www/html
 COPY . .
 
 RUN composer install --no-interaction --prefer-dist --ignore-platform-reqs
-RUN php artisan config:clear
-RUN php artisan route:clear
-RUN php artisan cache:clear
+
+RUN cp -n .env.example .env || true
+RUN php artisan key:generate --force
+RUN touch database/database.sqlite
+RUN php artisan migrate --force --seed
 RUN php artisan l5-swagger:generate
-RUN chown -R www-data:www-data storage bootstrap/cache
+
+RUN mkdir -p storage/framework/cache storage/framework/sessions storage/framework/views
+RUN chown -R www-data:www-data storage bootstrap/cache database
 
 ENV APACHE_DOCUMENT_ROOT /var/www/html/public
 
@@ -33,5 +32,8 @@ RUN sed -ri -e 's!/var/www/html!${APACHE_DOCUMENT_ROOT}!g' \
 RUN sed -ri -e 's!/var/www/!${APACHE_DOCUMENT_ROOT}!g' \
     /etc/apache2/apache2.conf \
     /etc/apache2/conf-available/*.conf
-
-EXPOSE 80 
+RUN echo '<Directory /var/www/html/public>\n\
+    AllowOverride All\n\
+    Require all granted\n\
+</Directory>' >> /etc/apache2/apache2.conf
+EXPOSE 80

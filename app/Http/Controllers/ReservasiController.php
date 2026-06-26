@@ -6,6 +6,7 @@ use App\Models\Reservasi;
 use App\Models\UserRole;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Validator;
 use OpenApi\Attributes as OA;
 use App\Service\SsoService;
 use App\Service\SoapAuditService;
@@ -73,9 +74,17 @@ class ReservasiController extends Controller
     )]
     public function store(Request $request)
     {
-    $request->validate([
-        'name' => 'required|string'
-    ]);
+    $validator = Validator::make($request->all(), [
+            'name' => 'required|string'
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json([
+                'status' => 'error',
+                'message' => 'Validation error',
+                'errors' => $validator->errors()
+            ], 422); 
+        }
 
     $reservasi = Reservasi::create([
         'booking_code' => 'AUTO-' . time(),
@@ -308,6 +317,18 @@ class ReservasiController extends Controller
     )]
     public function updateStatus(Request $request, $id)
     {
+        $validator = Validator::make($request->all(), [
+            'status' => 'required|in:pending,confirmed,checked_in,cancelled'
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json([
+                'status' => 'error',
+                'message' => 'Validation error',
+                'errors' => $validator->errors()
+            ], 422); 
+        }
+
         $reservasi = Reservasi::find($id);
 
         if (!$reservasi) {
@@ -317,10 +338,6 @@ class ReservasiController extends Controller
                 'errors' => null
             ], 404);
         }
-
-        $request->validate([
-            'status' => 'required|in:pending,confirmed,checked_in,cancelled'
-        ]);
 
         $reservasi->status = $request->status;
         $reservasi->save();

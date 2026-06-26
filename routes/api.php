@@ -3,7 +3,8 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ReservasiController;
 use App\Http\Controllers\SsoTestController;
-Route::prefix('v1')->middleware('reservasi.key')->group(function () {
+use App\Http\Middleware\ReservasiMiddleware;
+Route::prefix('v1')->middleware(ReservasiMiddleware::class)->group(function () {
 
     Route::get('/reservations',
         [ReservasiController::class,'index']);
@@ -25,5 +26,6 @@ Route::prefix('v1')->middleware('reservasi.key')->group(function () {
         
     Route::post('/reservations',
         [ReservasiController::class, 'store']);
+    
 });
 
