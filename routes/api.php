@@ -22,5 +22,8 @@ Route::prefix('v1')->middleware('reservasi.key')->group(function () {
 
     Route::get('/sso/m2m',
         [SsoTestController::class, 'm2m']);
+        
+    Route::post('/reservations',
+        [ReservasiController::class, 'store']);
 });
 

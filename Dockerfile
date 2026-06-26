@@ -19,7 +19,10 @@ WORKDIR /var/www/html
 COPY . .
 
 RUN composer install --no-interaction --prefer-dist --ignore-platform-reqs
-
+RUN php artisan config:clear
+RUN php artisan route:clear
+RUN php artisan cache:clear
+RUN php artisan l5-swagger:generate
 RUN chown -R www-data:www-data storage bootstrap/cache
 
 ENV APACHE_DOCUMENT_ROOT /var/www/html/public

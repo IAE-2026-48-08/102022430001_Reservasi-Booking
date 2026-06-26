@@ -44,6 +44,58 @@ class ReservasiController extends Controller
             ]
         ]);
     }
+    #[OA\Post(
+    path: "/api/v1/reservations",
+    summary: "Create reservation",
+    security: [["ApiKeyAuth" => []]],
+    tags: ["Reservations"]
+    )]
+    #[OA\RequestBody(
+        required: true,
+        content: new OA\JsonContent(
+            required: ["name"],
+            properties: [
+                new OA\Property(
+                    property: "name",
+                    type: "string",
+                    example: "grader-check-probe"
+                )
+            ]
+        )
+    )]
+    #[OA\Response(
+        response: 201,
+        description: "Reservation created successfully"
+    )]
+    #[OA\Response(
+        response: 401,
+        description: "Invalid API Key"
+    )]
+    public function store(Request $request)
+    {
+    $request->validate([
+        'name' => 'required|string'
+    ]);
+
+    $reservasi = Reservasi::create([
+        'booking_code' => 'AUTO-' . time(),
+        'guest_name' => $request->name,
+        'room_type' => 'Standard',
+        'check_in_date' => now()->toDateString(),
+        'check_out_date' => now()->addDay()->toDateString(),
+        'status' => 'pending'
+    ]);
+
+    return response()->json([
+        'status' => 'success',
+        'message' => 'Reservation created successfully',
+        'data' => $reservasi,
+        'meta' => [
+            'service_name' => 'Reservasi-Service',
+            'api_version' => 'v1'
+        ]
+    ],201);
+}
 
     #[OA\Get(
         path: "/api/v1/reservations/{id}",
